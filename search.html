@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>search</title>
+<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.2.1/vue-resource.min.js"></script>
+</head>
+<body>
+	<div id="out">
+		<input type="text" v-model="ipt" />
+		<button @click="tap()">获取数据</button>
+		<ul>
+			<li v-for="item in list">{{item}}</li>
+		</ul>		
+	</div>
+</body>
+<script type="text/javascript">
+	var vm=new Vue({
+		el:'#out',
+		data:{
+			ipt:'',
+			list:[]
+		},
+		methods:{
+			tap:function(){
+				 var that=this;
+				 var api='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+this.ipt;
+				 
+		         this.$http.jsonp(api,{
+		             jsonp:'cb'
+		         }).then(function(data){
+		             console.log(data.body.s);
+		            that.list=data.body.s;
+		          },function(){
+ 				// error
+          			})
+
+			}
+		}
+	})
+</script>
+</html>
